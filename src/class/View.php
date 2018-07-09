@@ -19,7 +19,7 @@ class View
     
     public function render(string $template, array $array = [])
     {
-        $template = $this->twig->loadTemplate($template);
+        $template = $this->twig->loadTemplate($template . '.twig');
         echo $template->render($array);
     }
 }
