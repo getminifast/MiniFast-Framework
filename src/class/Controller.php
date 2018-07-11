@@ -4,7 +4,7 @@ class Controller
 {
     private $controllers = [];
     private $twig;
-    
+
     public function __construct(string $directory = '')
     {
         if(!empty($directory))
@@ -12,7 +12,7 @@ class Controller
             self::parseControllers($directory);
         }
     }
-    
+
     public function parseControllers(string $directory, string $lastDir = '')
     {
         $directory = trim($directory, '/');
@@ -47,17 +47,19 @@ class Controller
             }
         }
     }
-    
+
     public function listControllers()
     {
         return $this->controllers;
     }
-    
-    public function useController(string $controller)
+
+    public function useController(string $controller, array $vars = [])
     {
+        $_SESSION['tmp'] = $vars;
+
         if(array_key_exists($controller, $this->controllers))
         {
-            include $this->controllers[$controller]['fullPath'];
+            include($this->controllers[$controller]['fullPath']);
         }
         else
         {
