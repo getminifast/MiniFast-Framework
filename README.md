@@ -81,7 +81,7 @@ elseif($route[0] == 'user' and sizeof($route) > 1) // For the profile page
 #### Twig
 
 MiniFast is using [Twig](https://twig.symfony.com/doc/2.x/) as template manager.
-For this part, you will need to refere on the [Twig](https://twig.symfony.com/doc/2.x/) documentation. No need to install, it is included in MiniFast.
+For this part, you will need to refere on the [Twig](https://twig.symfony.com/doc/2.x/) documentation. No need to install it as it's already included in MiniFast when installed via Composer.
 
 #### Using
 
