@@ -1,0 +1,13 @@
+{
+    "routes": [
+        {
+            "route": "/",
+            "controller": null,
+            "view": "index"
+        },
+        {
+            "route": "/user/{pseudo}",
+            "controller": "UserProfile"
+        }
+    ]
+}
