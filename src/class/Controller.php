@@ -15,8 +15,9 @@ class Controller
 
     public function parseControllers(string $directory, string $lastDir = '')
     {
-        $directory = trim($directory, '/');
-        $all = scandir($directory);
+        $directory = '/' . trim($directory, '/');
+        $all = scandir('/' . $directory);
+
         foreach($all as $file)
         {
             // Excluding . and ..
@@ -29,7 +30,7 @@ class Controller
                 }
                 else
                 {
-                    // 'Controller.php' at the end of the file name indicate thzt it's a controller
+                    // 'Controller.php' at the end of the file name indicate it's a controller
                     if(preg_match('/Controller\.php$/', $file))
                     {
                         $controllerName = ucfirst(strtolower(str_replace('Controller.php', '', $file)));
@@ -55,7 +56,7 @@ class Controller
 
     public function useController(string $controller, array $vars = [])
     {
-        $_SESSION['tmp'] = $vars;
+        $_SESSION['route'] = $vars;
 
         if(array_key_exists($controller, $this->controllers))
         {
@@ -63,7 +64,7 @@ class Controller
         }
         else
         {
-            die("The controller does not exist.");
+            die("The controller `$controller` does not exist."); 
         }
     }
 }
