@@ -7,7 +7,7 @@ A mini and fast PHP Framework. Works best with MiniFast-ORM.
 
 Install MiniFast with [Composer](https://getcomposer.org/):
 ```sh
-$ wget http://getcomposer.org/composer.phar ; php composer.phar require itechcydia/minifast *
+$ wget http://getcomposer.org/composer.phar ; php composer.phar require itechcydia/minifast ^1
 ```
 
 Then you just have to include Composer `vendor/autoload.php` file.
