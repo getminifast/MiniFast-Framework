@@ -52,6 +52,7 @@ server {
 }
 ```
 
+#### Manuel way
 It is very simple to use. You can get the URL as a PHP array without $_GET parameters:
 ```php
 <?php
@@ -74,6 +75,38 @@ elseif($route[0] == 'user' and sizeof($route) > 1) // For the profile page
     // $route[1] will have the user ID
 }
 // ...
+```
+
+#### Automatic way
+If you don't want to manage the route manualy, MiniFast can do it for you. You will have to write your routes in a JSON file:
+```json
+{
+    "routes": [
+        {
+            "route": "/",
+            "view": "index"
+            // If you don"t have controller for a route, don't specify it or set its value to null
+        },
+        {
+            "route": "/user/{pseudo}", // Variable is written between accolades '{' and '}'
+            "controller": "UserController" // The view can be choose inside the controller
+        }
+    ]
+}
+```
+
+With this automatique methode, your `index.php` will be very simple:
+```php
+<?php
+session_start();    // You need to start sessions because
+                    // vars in the URL will be stored in
+                    // $_SESSION['route']
+$route = new Route();
+$route->fromFile(
+    __DIR__ . '/routes.json',
+    __DIR__ . '/controllers',
+    __DIR__ . '/templates'
+);
 ```
 
 ### View
@@ -158,6 +191,6 @@ elseif($route[1] == 'login')
 // Your code...
 ```
 
-Then in your controller, you can retrive it in `$_SESSION['tmp']['var1']`.
+Then in your controller, you can retrive it in `$_SESSION['route']['var1']`.
 
-Hope you will enjoy MiniFast !
+#### Hope you will enjoy MiniFast !
