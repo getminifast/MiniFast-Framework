@@ -85,15 +85,17 @@ If you don't want to manage the route manualy, MiniFast can do it for you. You w
         {
             "route": "/",
             "view": "index"
-            // If you don"t have controller for a route, don't specify it or set its value to null
         },
         {
-            "route": "/user/{pseudo}", // Variable is written between accolades '{' and '}'
-            "controller": "UserController" // The view can be choose inside the controller
+            "route": "/user/{pseudo}",
+            "controller": "UserController"
         }
     ]
 }
 ```
+If you don"t have controller for a route, don't specify it or set its value to null.
+Variable in the URL is written between accolades '{' and '}'.
+The view can be choosen inside the controller so in this case, like the controller, don't specify it or set its value to null.
 
 With this automatique methode, your `index.php` will be very simple:
 ```php
@@ -130,7 +132,7 @@ Then when you want to render a specific template:
 // Your code...
 elseif($route[0] == 'downloads')
 {
-    // No need to white '.twig' at the end of the template name, MiniFast do it for you
+    // No need to write '.twig' at the end of the template name, MiniFast do it for you
     $view->render('template_name', [
         'var1' => $var1,
         'var2' => $var2
