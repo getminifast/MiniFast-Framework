@@ -12,7 +12,8 @@
     ],
     "require": {
         "php": "^7.0",
-        "itechcydia/minifast-orm": "dev-master"
+        "itechcydia/minifast-orm": "^1",
+        "twig/twig": "^2"
     },
     "autoload": {
         "files": [
