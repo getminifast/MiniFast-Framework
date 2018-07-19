@@ -15,6 +15,7 @@ class Route
 
     public function fromFile(string $file, string $controllerDir, string $templateDir)
     {
+        $vars = [];
         if(file_exists($file))
         {
             if(self::is_json($file))
@@ -34,11 +35,16 @@ class Route
                         for($i = 0; $i < sizeof($currentRoute); $i++)
                         {
                             $backup = $newRoutes;
-                            $newRoutes = self::findRouteByIndex($newRoutes, $i, $currentRoute[$i]); // Se termine tjr par 0
+                            $newRoutes = self::findRouteByIndex($newRoutes, $i, $currentRoute[$i]);
 
                             if(sizeof($newRoutes) < 1)
                             {
                                 $newRoutes = self::findRouteByVar($backup, $i);
+
+                                if(isset($newRoutes[0]['var']))
+                                {
+                                    $vars[$newRoutes[0]['var'][1]] = $currentRoute[$i];
+                                }
 
                                 if(sizeof($newRoutes) > 0)
                                 {
@@ -58,9 +64,7 @@ class Route
                         {
                             if(isset($newRoutes[0]['var']) and isset($newRoutes[0]['index']))
                             {
-                                self::useRoute($newRoutes[0], $controllerDir, $templateDir, [
-                                    $newRoutes[0]['var'][1] => self::getRouteAsArray()[$newRoutes[0]['index']]
-                                ]);
+                                self::useRoute($newRoutes[0], $controllerDir, $templateDir, $vars);
                             }
                             else
                             {
@@ -70,6 +74,7 @@ class Route
                     }
                     else
                     {
+                        echo 'ok';
                         throw new Exception("No corresponding route for `$this->route`.");
                     }
                 }
