@@ -55,7 +55,9 @@ class Route
                                 }
                                 else
                                 {
-                                    throw new Exception("No corresponding route for `$this->route`.");
+//                                    throw new Exception("No corresponding route for `$this->route`.");
+                                    header("HTTP/1.0 404 Not Found");
+                                    exit;
                                 }
                             }
                         }
@@ -75,7 +77,9 @@ class Route
                     else
                     {
                         echo 'ok';
-                        throw new Exception("No corresponding route for `$this->route`.");
+//                        throw new Exception("No corresponding route for `$this->route`.");
+                        header("HTTP/1.0 404 Not Found");
+                        exit;
                     }
                 }
                 else
@@ -117,7 +121,7 @@ class Route
         return $cleanRoute;
     }
 
-    public function getRouteAsJson()
+    public function getRouteAsJSON()
     {
         return json_encode(self::getRouteAsArray());
     }
@@ -201,7 +205,7 @@ class Route
             if($route['view'] != null)
             {
                 $view = new View($templateDir);
-                $view->render($route['view']);
+                $view->render($route['view'], $vars);
             }
         }
     }
