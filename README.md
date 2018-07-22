@@ -106,8 +106,8 @@ session_start();    // You need to start sessions because
 $route = new Route();
 $route->fromFile(
     __DIR__ . '/routes.json',
-    __DIR__ . '/controllers',
-    __DIR__ . '/templates'
+    __DIR__ . '/controllers', // See Controller part
+    __DIR__ . '/templates' // See View part, just below
 );
 ```
 
