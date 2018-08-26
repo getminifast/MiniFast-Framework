@@ -3,6 +3,11 @@
 class Route
 {
     private $route;
+    private $routeToUse;
+    private $default;
+    private $vars = [];
+    private $controllerDir;
+    private $templateDir;
 
     public function __construct()
     {
@@ -12,90 +17,116 @@ class Route
         $uri = '/' . trim($uri, '/');
         $this->route = $uri;
     }
-
-    public function fromFile(string $file, string $controllerDir, string $templateDir)
+    
+    public function fromFile($file, string $controllerDir = '', string $templateDir = '')
     {
-        $vars = [];
-        if(file_exists($file))
+        if(!empty($controllerDir))
         {
-            if(self::is_json($file))
+            $this->controllerDir = $controllerDir;
+        }
+        
+        if(!empty($templateDir))
+        {
+            $this->templateDir = $templateDir;
+        }
+        
+        // If there are multiple routing files, check all files
+        if(is_array($file))
+        {
+            foreach($file as $f)
             {
-                $json = json_decode(file_get_contents($file), true);
-                if(isset($json['routes']))
+                if(is_string($f))
                 {
-                    $possibleRoutes = self::findRouteBySize($json['routes']);
-
-                    if(sizeof($possibleRoutes) > 0)
+                    // Does the file exists?
+                    if(file_exists($f))
                     {
-                        $currentRoute = self::getRouteAsArray();
-                        sizeof($currentRoute);
-                        $newRoutes = $possibleRoutes;
-                        $backup = [];
+                        self::fromFile($f);
+                    }
+                }
+            }
+        }
+        elseif(is_string($file))
+        {
+            // Does the file exists?
+            if(file_exists($file))
+            {
+                $routes = json_decode(file_get_contents($file), true);
+                
+                if($routes === null)
+                {
+                    die("$file is not a valid JSON." . PHP_EOL);
+                }
+                else
+                {
+                    // If all seems ok, start parsing
+                    if(sizeof(self::getRouteAsArray()) > 1)
+                    {
+                        // If the route if bigger than 1
+                        $route = self::findBySection($routes);
 
-                        for($i = 0; $i < sizeof($currentRoute); $i++)
+                        if($route)
                         {
-                            $backup = $newRoutes;
-                            $newRoutes = self::findRouteByIndex($newRoutes, $i, $currentRoute[$i]);
-
-                            if(sizeof($newRoutes) < 1)
-                            {
-                                $newRoutes = self::findRouteByVar($backup, $i);
-
-                                if(isset($newRoutes[0]['var']))
-                                {
-                                    $vars[$newRoutes[0]['var'][1]] = $currentRoute[$i];
-                                }
-
-                                if(sizeof($newRoutes) > 0)
-                                {
-                                    if(sizeof($newRoutes) != 1)
-                                    {
-                                        throw new Exception("There is multiple corresponding routes for `$this->route`.");
-                                    }
-                                }
-                                else
-                                {
-//                                    throw new Exception("No corresponding route for `$this->route`.");
-                                    header("HTTP/1.0 404 Not Found");
-                                    exit;
-                                }
-                            }
+                            $this->routeToUse = $route;
+                            self::useRoute($this->routeToUse);
                         }
-
-                        if(sizeof($newRoutes) == 1)
+                        elseif(!empty($this->default))
                         {
-                            if(isset($newRoutes[0]['var']) and isset($newRoutes[0]['index']))
-                            {
-                                self::useRoute($newRoutes[0], $controllerDir, $templateDir, $vars);
-                            }
-                            else
-                            {
-                                self::useRoute($newRoutes[0], $controllerDir, $templateDir);
-                            }
+                            self::useRoute($this->default);
                         }
                     }
                     else
                     {
-                        echo 'ok';
-//                        throw new Exception("No corresponding route for `$this->route`.");
-                        header("HTTP/1.0 404 Not Found");
-                        exit;
+                        if(isset($routes['routes']))
+                        {
+                            // If there are routes of size 1
+                            foreach($routes['routes'] as $route)
+                            {
+                                if(trim($route['name'], '/') === (sizeof(self::getRouteAsArray()) > 0 ? self::getRouteAsArray()[0] : ''))
+                                {
+                                    $this->routeToUse = $route;
+                                    break;
+                                }
+                            }
+                            
+                            // If a route has been found
+                            if(!empty($this->routeToUse))
+                            {
+                                self::useRoute($this->routeToUse);
+                            }
+                            else
+                            {
+                                // Try to find a variable
+                                foreach($routes['routes'] as $route)
+                                {
+                                    if(self::is_var($route['name']))
+                                    {
+                                        $val = self::getRouteAsArray();
+                                        $val = $val[sizeof($val) - 1];
+                                        $this->vars[self::is_var($route['name'])[1]] = $val;
+                                        
+                                        $this->routeToUse = $route;
+                                        break;
+                                    }
+                                }
+                                
+                                // If a route with a var has been found
+                                if(!empty($this->routeToUse))
+                                {
+                                    self::useRoute($this->routeToUse);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            die("No corresponding route found in $file." . PHP_EOL);
+                        }
                     }
-                }
-                else
-                {
-                    //                    var_dump($json);
-                    throw new Exception("No route found in `$file`.");
                 }
             }
             else
             {
-                throw new Exception("`$file` is not a valide JSON.");
+                die("The file $file does not exists." . PHP_EOL);
             }
-        }
-        else
-        {
-            throw new Exception("File `$file` not found.");
         }
     }
 
@@ -147,6 +178,74 @@ class Route
 
         return $newRoutes;
     }
+    
+    private function findBySection(array $routes, int $index = 0)
+    {
+        $currentRoute = self::getRouteAsArray();
+        $route = [];
+        $testVar = true;
+        
+        if(isset($routes['default']))
+        {
+            $this->default = $routes['default'];
+        }
+        
+        if(sizeof($currentRoute) > 1)
+        {
+            $match = (sizeof($currentRoute) > ($index + 1)) ? 'sections' : 'routes';
+            
+            if(isset($routes[$match]))
+            {
+                foreach($routes[$match] as $section)
+                {
+                    if(isset($section['name']))
+                    {
+                        if($section['name'] == $currentRoute[$index])
+                        {
+                            $testVar = false;
+                            if(sizeof($currentRoute) > $index + 1)
+                            {
+                                $route = self::findBySection($section, $index + 1);
+                            }
+                            else
+                            {
+                                $route = $section;
+                            }
+                            
+                            break;
+                        }
+                    }
+                }
+                
+                if($testVar)
+                {
+                    foreach($routes[$match] as $section)
+                    {
+                        if(isset($section['name']))
+                        {
+                            if(self::is_var($section['name']))
+                            {
+                                $this->vars[self::is_var($section['name'])[1]] = $currentRoute[$index];
+                                
+                                if(sizeof($currentRoute) > $index + 1)
+                                {
+                                    $route = self::findBySection($section, $index + 1);
+                                }
+                                else
+                                {
+                                    $route = $section;
+                                }
+                                
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        return $route;
+    }
 
     private function findRouteByIndex(array $routes, int $index, string $key)
     {
@@ -189,14 +288,14 @@ class Route
         return $match;
     }
 
-    private function useRoute(array $route, string $controllerDir, string $templateDir, array $vars = [])
+    private function useRoute(array $route)
     {
         if(isset($route['controller']))
         {
             if($route['controller'] != null)
             {
-                $controller = new Controller($controllerDir);
-                $controller->useController($route['controller'], $vars);
+                $controller = new Controller($this->controllerDir);
+                $controller->useController($route['controller'], $this->vars);
             }
         }
 
@@ -204,8 +303,8 @@ class Route
         {
             if($route['view'] != null)
             {
-                $view = new View($templateDir);
-                $view->render($route['view'], $vars);
+                $view = new View($this->templateDir);
+                $view->render($route['view'], $this->vars);
             }
         }
     }
