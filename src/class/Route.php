@@ -6,7 +6,8 @@ class Route
     private $routeToUse;
     private $default;
     private $vars = [];
-    private $controllerDir;
+    private $controllerDir = [];
+    private $controllers = [];
     private $templateDir;
 
     public function __construct()
@@ -18,11 +19,18 @@ class Route
         $this->route = $uri;
     }
     
-    public function fromFile($file, string $controllerDir = '', string $templateDir = '')
+    public function fromFile($file, $controllerDir = '', string $templateDir = '')
     {
         if(!empty($controllerDir))
         {
-            $this->controllerDir = $controllerDir;
+            if(is_array($controllerDir))
+            {
+                $this->controllerDir = array_merge($this->controllerDir, $controllerDir);
+            }
+            elseif(is_string($controllerDir))
+            {
+                $this->controllerDir[] = $controllerDir;
+            }
         }
         
         if(!empty($templateDir))
@@ -59,7 +67,8 @@ class Route
                 else
                 {
                     // If all seems ok, start parsing
-                    if(sizeof(self::getRouteAsArray()) > 1)
+                    if(1)
+//                    if(sizeof(self::getRouteAsArray()) > 1)
                     {
                         // If the route if bigger than 1
                         $route = self::findBySection($routes);
@@ -74,53 +83,58 @@ class Route
                             self::useRoute($this->default);
                         }
                     }
-                    else
-                    {
-                        if(isset($routes['routes']))
-                        {
-                            // If there are routes of size 1
-                            foreach($routes['routes'] as $route)
-                            {
-                                if(trim($route['name'], '/') === (sizeof(self::getRouteAsArray()) > 0 ? self::getRouteAsArray()[0] : ''))
-                                {
-                                    $this->routeToUse = $route;
-                                    break;
-                                }
-                            }
-                            
-                            // If a route has been found
-                            if(!empty($this->routeToUse))
-                            {
-                                self::useRoute($this->routeToUse);
-                            }
-                            else
-                            {
-                                // Try to find a variable
-                                foreach($routes['routes'] as $route)
-                                {
-                                    if(self::is_var($route['name']))
-                                    {
-                                        $val = self::getRouteAsArray();
-                                        $val = $val[sizeof($val) - 1];
-                                        $this->vars[self::is_var($route['name'])[1]] = $val;
-                                        
-                                        $this->routeToUse = $route;
-                                        break;
-                                    }
-                                }
-                                
-                                // If a route with a var has been found
-                                if(!empty($this->routeToUse))
-                                {
-                                    self::useRoute($this->routeToUse);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            die("No corresponding route found in $file." . PHP_EOL);
-                        }
-                    }
+//                    else
+//                    {
+//                        if(isset($routes['routes']))
+//                        {
+//                            // If there are routes of size 1
+//                            if(isset($routes['default']))
+//                            {
+//                                
+//                            }
+//                            
+//                            foreach($routes['routes'] as $route)
+//                            {
+//                                if(trim($route['name'], '/') === (sizeof(self::getRouteAsArray()) > 0 ? self::getRouteAsArray()[0] : ''))
+//                                {
+//                                    $this->routeToUse = $route;
+//                                    break;
+//                                }
+//                            }
+//                            
+//                            // If a route has been found
+//                            if(!empty($this->routeToUse))
+//                            {
+//                                self::useRoute($this->routeToUse);
+//                            }
+//                            else
+//                            {
+//                                // Try to find a variable
+//                                foreach($routes['routes'] as $route)
+//                                {
+//                                    if(self::is_var($route['name']))
+//                                    {
+//                                        $val = self::getRouteAsArray();
+//                                        $val = $val[sizeof($val) - 1];
+//                                        $this->vars[self::is_var($route['name'])[1]] = $val;
+//                                        
+//                                        $this->routeToUse = $route;
+//                                        break;
+//                                    }
+//                                }
+//                                
+//                                // If a route with a var has been found
+//                                if(!empty($this->routeToUse))
+//                                {
+//                                    self::useRoute($this->routeToUse);
+//                                }
+//                            }
+//                        }
+//                        else
+//                        {
+//                            die("No corresponding route found in $file." . PHP_EOL);
+//                        }
+//                    }
                 }
             }
             else
@@ -243,6 +257,42 @@ class Route
                 }
             }
         }
+        else
+        {
+            if(isset($routes['routes']))
+            {
+                foreach($routes['routes'] as $section)
+                {
+                    if(isset($section['name']))
+                    {
+                        if(trim($section['name'], '/') == (isset($currentRoute[$index]) ? $currentRoute[$index] : ''))
+                        {
+                            $testVar = false;
+                            $route = $section;
+                            
+                            break;
+                        }
+                    }
+                }
+                
+                if($testVar)
+                {
+                    foreach($routes['routes'] as $section)
+                    {
+                        if(isset($section['name']))
+                        {
+                            if(self::is_var($section['name']))
+                            {
+                                $this->vars[self::is_var($section['name'])[1]] = $currentRoute[$index];
+                                $route = $section;
+                                
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
         
         return $route;
     }
@@ -287,15 +337,36 @@ class Route
 
         return $match;
     }
+    
+    private function add_controllers($controllers)
+    {
+        if($controllers != null)
+        {
+            if(is_array($controllers))
+            {
+                $this->controllers = array_merge($this->controllers, $controllers);
+            }
+            elseif(is_string($controllers))
+            {
+                $this->controllers[] = $controllers;
+            }
+        }
+    }
 
     private function useRoute(array $route)
     {
         if(isset($route['controller']))
         {
-            if($route['controller'] != null)
+            self::add_controllers($route['controller']);
+        }
+        
+        if(!empty($this->controllers))
+        {
+            $controller = new Controller($this->controllerDir);
+            
+            foreach($this->controlers as $c)
             {
-                $controller = new Controller($this->controllerDir);
-                $controller->useController($route['controller'], $this->vars);
+                $controller->useController($c);
             }
         }
 
