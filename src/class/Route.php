@@ -360,6 +360,7 @@ class Route
             self::add_controllers($route['controller']);
         }
         
+        // Invoke all controllers
         if(!empty($this->controllers))
         {
             $controller = new Controller($this->controllerDir);
@@ -369,7 +370,14 @@ class Route
                 $controller->useController($c);
             }
         }
-
+        
+        // Update response
+        if(isset($route['response']))
+        {
+            http_response_code(intval($route['response']));
+        }
+        
+        // Render views
         if(isset($route['view']))
         {
             if($route['view'] != null)
