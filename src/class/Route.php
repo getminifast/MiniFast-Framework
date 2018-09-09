@@ -67,21 +67,17 @@ class Route
                 else
                 {
                     // If all seems ok, start parsing
-                    if(1)
-//                    if(sizeof(self::getRouteAsArray()) > 1)
-                    {
-                        // If the route if bigger than 1
-                        $route = self::findBySection($routes);
+                    // If the route if bigger than 1
+                    $route = self::findBySection($routes);
 
-                        if($route)
-                        {
-                            $this->routeToUse = $route;
-                            self::useRoute($this->routeToUse);
-                        }
-                        elseif(!empty($this->default))
-                        {
-                            self::useRoute($this->default);
-                        }
+                    if($route)
+                    {
+                        $this->routeToUse = $route;
+                        self::useRoute($this->routeToUse);
+                    }
+                    elseif(!empty($this->default))
+                    {
+                        self::useRoute($this->default);
                     }
                 }
             }
@@ -321,6 +317,16 @@ class Route
             foreach($this->controllers as $c)
             {
                 $controller->useController($c);
+            }
+        }
+        
+        // Redirect
+        if(isset($route['redirect']))
+        {
+            if(is_string($route['redirect']))
+            {
+                header('Location: /' . trim($route['redirect'], '/'));
+                exit;
             }
         }
         
