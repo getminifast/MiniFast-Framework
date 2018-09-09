@@ -59,7 +59,7 @@ class Route
             if(file_exists($file))
             {
                 $routes = json_decode(file_get_contents($file), true);
-                
+
                 if($routes === null)
                 {
                     die("$file is not a valid JSON." . PHP_EOL);
@@ -382,8 +382,10 @@ class Route
         {
             if($route['view'] != null)
             {
+                $container = new Container();
+                $container->getStorage()->mergeAttributes($this->vars);
                 $view = new View($this->templateDir);
-                $view->render($route['view'], $this->vars);
+                $view->render($route['view']);
             }
         }
     }

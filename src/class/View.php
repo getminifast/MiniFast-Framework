@@ -13,13 +13,15 @@ class View
             $this->twig = new Twig_Environment($loader, [
                 'cache' => false // No cache for dev environment
             ]);
-            $this->twig->addGlobal('session', $_SESSION); // Allow access to $_SESSION in all templates
+            if(isset($_SESSION)) $this->twig->addGlobal('session', $_SESSION); // Allow access to $_SESSION in all templates
+            
         }
     }
 
-    public function render(string $template, array $array = [])
+    public function render(string $template)
     {
         $template = $this->twig->loadTemplate($template . '.twig');
-        echo $template->render($array);
+        $container = new Container();
+        echo $template->render($container->getStorage()->getAll());
     }
 }
