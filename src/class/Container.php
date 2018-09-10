@@ -1,19 +1,14 @@
 <?php
 
-class Container
+class Container extends Pimple
 {
-    private $parameters = [
-        'storage.class' => 'Storage'
-    ];
-
-    public function __construct(array $parameters = [])
+    public function __construct()
     {
-        $this->parameters = $this->addParameter($parameters);
-    }
-    
-    public function addParameter(array $parameters)
-    {
-        $this->parameters = array_merge($this->parameters, $parameters);
+        $this['user.storage.class'] = 'Storage';
+        
+        $this['user.storage'] = $this->share(function($c){
+            return new $c['user.storage.class']();
+        });
     }
 
     public function getStorage()
