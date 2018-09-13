@@ -4,13 +4,10 @@ namespace MiniFast;
 
 class Controller
 {
-    private $directory;
-    
     /**
      * Create new instance of *Controller*
-     * @param string $directory This is the directory where controllers are stored
      */
-    public function __construct(string $directory)
+    public function __construct()
     {
         $loader = new Autoloader();
         $loader->addNamespace('MiniFast\Controller', $directory);
@@ -22,15 +19,8 @@ class Controller
      */
     public function useController(string $controller)
     {
-        try
-        {
-            $c = new $this->getFullClassName($controller)();
-            $c->index();
-        }
-        catch(Exception $e)
-        {
-            
-        }
+        $c = new $this->getFullClassName($controller)();
+        $c->index();
     }
     
     /**
@@ -41,7 +31,8 @@ class Controller
     protected function getFullClassName(string $class_name)
     {
         $relative_class = trim(str_replace('.', '\\', $controller), '\\')
-            . 'Controller.php';
+            . '.php';
+        
         $qualified_class = 'MiniFast\Controller\\'
             . $relative_class;
         
