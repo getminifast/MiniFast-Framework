@@ -1,24 +1,23 @@
 {
-    "name": "itechcydia/minifast",
+    "name": "minifast/minifast",
     "description": "A little framework, very simple to use and ultra fast",
     "license": "MIT",
     "authors": [
         {
             "name": "Vincent Bathelier",
             "email": "vincent.bathelier98@gmail.com",
-            "homepage": "http://minifast.itechcydia.fr",
+            "homepage": "http://getminifast.org",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^7.0",
-        "itechcydia/minifast-orm": "^1",
-        "twig/twig": "^2",
-        "pimple/pimple": "~3.0"
+        "minifast/minifast-orm": "^1",
+        "twig/twig": "^2"
     },
     "autoload": {
-        "files": [
-            "src/autoload.php"
-        ] 
+        "psr-4": {
+            "MiniFast\\": 'src/MiniFast/'
+        }
     }
 }
