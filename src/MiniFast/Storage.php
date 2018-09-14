@@ -47,4 +47,14 @@ class Storage extends MiniFast\Singleton
     {
         return $this->storage;
     }
+
+    /**
+     * Test the existence of a key
+     * @param  mixed   $key The key to find
+     * @return boolean [[Description]]
+     */
+    public function isset($key)
+    {
+        return \isset($this->storage[$key]);
+    }
 }
