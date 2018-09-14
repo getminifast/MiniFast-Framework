@@ -6,14 +6,6 @@ class Singleton
 {
     /**
      * Return *Singleton* instance of this class
-     *
-     * @staticvar Singleton $instance *Singleton* instance of this class
-     *
-     * @return Singleton *Singleton* instance
-     */
-    
-    /**
-     * Return *Singleton* instance of this class
      * 
      * @staticvar Singleton $instance *Singleton* instance of this class
      * @return Singleton *Singleton* instance
@@ -21,8 +13,7 @@ class Singleton
     public static function getInstance()
     {
         static $instance = null;
-        if(null === $instance)
-        {
+        if (null === $instance) {
             $instance = new static();
         }
         return $instance;
