@@ -5,7 +5,7 @@ namespace MiniFast;
 class Storage extends MiniFast\Singleton
 {
     protected $storage = [];
-    
+
     /**
      * Store an attribute
      * @param mixed $key   The key of the array
@@ -15,7 +15,7 @@ class Storage extends MiniFast\Singleton
     {
         $this->storage[$key] = $value;
     }
-    
+
     /**
      * Get the asked attribute
      * @param  mixed $key The key of the array
@@ -26,10 +26,10 @@ class Storage extends MiniFast\Singleton
         if (isset($this->storage[$key])) {
             return $this->storage[$key];
         }
-        
+
         return null;
     }
-    
+
     /**
      * Store one or more attributes by merging them
      * @param array $array The array to merge
@@ -38,7 +38,7 @@ class Storage extends MiniFast\Singleton
     {
         array_merge($this->storage, $array);
     }
-    
+
     /**
      * Get all attributes
      * @return array All attributes
