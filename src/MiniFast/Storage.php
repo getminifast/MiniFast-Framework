@@ -47,9 +47,4 @@ class Storage extends MiniFast\Singleton
     {
         return $this->storage;
     }
-    
-    public function isset($key)
-    {
-        return \isset($this->storage[$key]);
-    }
 }
