@@ -23,8 +23,7 @@ class Storage extends MiniFast\Singleton
      */
     public function getAttribute($key)
     {
-        if(isset($this->storage[$key]))
-        {
+        if (isset($this->storage[$key])) {
             return $this->storage[$key];
         }
         
