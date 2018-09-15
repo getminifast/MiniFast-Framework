@@ -2,7 +2,7 @@
 
 namespace MiniFast;
 
-class Storage extends MiniFast\Singleton
+class Storage extends Singleton
 {
     protected $storage = [];
 
@@ -27,7 +27,7 @@ class Storage extends MiniFast\Singleton
             return $this->storage[$key];
         }
 
-        return null;
+        return false;
     }
 
     /**
@@ -45,7 +45,7 @@ class Storage extends MiniFast\Singleton
      */
     public function getAttributes()
     {
-        return $this->storage;
+        return (array) $this->storage;
     }
 
     /**
@@ -55,6 +55,10 @@ class Storage extends MiniFast\Singleton
      */
     public function isset($key)
     {
-        return \isset($this->storage[$key]);
+        if (isset($this->storage[$key])) {
+            return true;
+        }
+        
+        return false;
     }
 }
