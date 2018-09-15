@@ -178,7 +178,7 @@ class Route
      */
     private function isVar(string $key)
     {
-        if($key[0] === '{' and $key[strlen($key) - 1] === '}')
+        if(substr($key, 0, 1) === '{' and substr($key, -1) === '}')
         {
             return true;
         }
