@@ -5,21 +5,13 @@ namespace MiniFast;
 class Controller
 {
     /**
-     * Create new instance of *Controller*
-     */
-    public function __construct()
-    {
-        $loader = new Autoloader();
-        $loader->addNamespace('MiniFast\Controller', $directory);
-    }
-    
-    /**
      * Execute a controller
      * @param string $controller The controller name
      */
     public function useController(string $controller)
     {
-        $c = new $this->getFullClassName($controller)();
+        $c = $this->getFullClassName($controller);
+        $c = new $c();
         $c->index();
     }
     
@@ -30,8 +22,7 @@ class Controller
      */
     protected function getFullClassName(string $class_name)
     {
-        $relative_class = trim(str_replace('.', '\\', $controller), '\\')
-            . '.php';
+        $relative_class = str_replace('.', '\\', $class_name);
         
         $qualified_class = 'MiniFast\Controller\\'
             . $relative_class;
