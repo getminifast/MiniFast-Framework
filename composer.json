@@ -16,8 +16,9 @@
         "twig/twig": "^2"
     },
     "autoload": {
-        "files": [
-            "src/autoload.php"
-        ] 
+        "psr-4": {
+            "MiniFast\\": "src/MiniFast/",
+            "MiniFast\\Controller\\": "../../../controllers/"
+        }
     }
 }
