@@ -9,6 +9,7 @@ class Route
     private $controllerDir;
     private $controllers = [];
     private $templateDir;
+    
     public function __construct()
     {
         $basepath = implode('/', array_slice(explode('/', $_SERVER['SCRIPT_NAME']), 0, -1)) . '/';
@@ -18,15 +19,8 @@ class Route
         $this->route = $uri;
     }
 
-    public function fromFile($file, string $controllerDir = '', string $templateDir = '')
+    public function fromFile($file, string $templateDir = '')
     {
-        if (!empty($controllerDir)) {
-            if (is_array($controllerDir)) {
-                $this->controllerDir = array_merge($this->controllerDir, $controllerDir);
-            } elseif (is_string($controllerDir)) {
-                $this->controllerDir = $controllerDir;
-            }
-        }
 
         if (!empty($templateDir)) {
             $this->templateDir = $templateDir;
