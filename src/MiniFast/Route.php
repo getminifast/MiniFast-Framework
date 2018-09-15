@@ -249,11 +249,16 @@ class Route
         // Render view
         if (isset($route['view'])) {
             if ($route['view'] != null) {
+                // New container
                 $container = new Container();
+                
+                // Insert vars in Storage
                 $container
                     ->getStorage()
-                    ->mergeAttributes($this->vars);
-                $view = new View($this->templateDir);
+                    ->setAttribute('route.storage', $this->vars);
+                
+                // Render the view
+                $view = $container->getView($this->templateDir);
                 $view->render($route['view']);
             }
         }
