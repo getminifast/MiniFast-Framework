@@ -5,14 +5,13 @@
     "authors": [
         {
             "name": "Vincent Bathelier",
-            "email": "vincent.bathelier98@gmail.com",
+            "email": "contact@minifast.org",
             "homepage": "http://getminifast.org",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^7.0",
-        "minifast/minifast-orm": "^1",
         "twig/twig": "^2"
     },
     "autoload": {
