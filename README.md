@@ -1,8 +1,6 @@
 # MiniFast-Framework
 A mini and fast PHP Framework. Works best with MiniFast-ORM.
 
-# Documentation
-
 ## Installation
 
 Install MiniFast with [Composer](https://getcomposer.org/):
