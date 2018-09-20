@@ -12,7 +12,7 @@ class View
         $this->twig = $twig;
     }
     
-    public function render(string $template)
+    public function render(string $template, array $array = [])
     {
         // Get storage
         $c = new Container();
@@ -30,7 +30,9 @@ class View
         }
         
         if ($storage->isset('route.storage')) {
-            echo $this->template->render($storage->getAttribute('route.storage'));
+            $s['storage'] = $storage->getAttribute('route.storage');
+            $array = array_merge($array, $s);
+            echo $this->template->render($array);
         } else {
             echo $this->template->render([]);
         }
