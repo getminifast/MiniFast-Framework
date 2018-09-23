@@ -12,11 +12,21 @@ class View
         $this->twig = $twig;
     }
     
+    /**
+     * Render a template
+     * @param string $template The template name
+     * @param array  $array    Variables to pass to the template
+     */
     public function render(string $template, array $array = [])
     {
         // Get storage
         $c = new Container();
-        $storage = $c->getStorage();
+        $s = $c->getStorage();
+        
+        // If array is not empty, add it to storage
+        if (!empty($array)) {
+            $s->setAttributes($array);
+        }
         
         // Determine if extension is set
         $extension = explode('.', $template);
@@ -29,12 +39,6 @@ class View
             $this->template = $this->twig->load($template . '.twig');
         }
         
-        if ($storage->isset('route.storage')) {
-            $s['storage'] = $storage->getAttribute('route.storage');
-            $array = array_merge($array, $s);
-            echo $this->template->render($array);
-        } else {
-            echo $this->template->render([]);
-        }
+        $this->template->render($s->getAttributes());
     }
 }
