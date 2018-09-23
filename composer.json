@@ -12,7 +12,8 @@
     ],
     "require": {
         "php": "^7.0",
-        "twig/twig": "^2"
+        "twig/twig": "^2",
+        "guzzlehttp/guzzle": "~6.0"
     },
     "autoload": {
         "psr-4": {
