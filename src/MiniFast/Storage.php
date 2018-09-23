@@ -55,10 +55,6 @@ class Storage extends Singleton
      */
     public function isset($key)
     {
-        if (isset($this->storage[$key])) {
-            return true;
-        }
-        
-        return false;
+        return isset($this->storage[$key]);
     }
 }
