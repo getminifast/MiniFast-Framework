@@ -5,11 +5,35 @@ namespace MiniFast;
 class Storage extends Singleton
 {
     protected $storage = [];
+    
+    /**
+     * Shortcut of getAttribute()
+     * @param  mixed $key The key of the array
+     * @return mixed The value of the key
+     */
+    public function __get($key)
+    {
+        if (!$this->isset($key)) {
+            throw new Exception("The variable $key is not defined");
+        } else {
+            return $this->getAttribute($key);
+        }
+    }
+    
+    /**
+     * Shortcut of setAttribute()
+     * @param mixed $key   The key of the array
+     * @param mixed $value The value of the key
+     */
+    public function __set($key, $value)
+    {
+        $this->setAttribute($key, $value);
+    }
 
     /**
      * Store an attribute
      * @param mixed $key   The key of the array
-     * @param mixed $value The value relative to the key
+     * @param mixed $value The value of the key
      */
     public function setAttribute($key, $value)
     {
@@ -19,7 +43,7 @@ class Storage extends Singleton
     /**
      * Get the asked attribute
      * @param  mixed $key The key of the array
-     * @return mixed The value relative to the key
+     * @return mixed The value of the key
      */
     public function getAttribute($key)
     {
