@@ -19,6 +19,11 @@ class Route
         $this->route = $uri;
     }
 
+    /**
+     * Select a file and search for the corresponding route
+     * @param string $file        The file to open
+     * @param string $templateDir The template directory
+     */
     public function fromFile($file, string $templateDir = '')
     {
 
@@ -60,10 +65,20 @@ class Route
             }
         }
     }
+    
+    /**
+     * Get the route
+     * @return array The route as an array
+     */
     public function getRoute()
     {
         return $this->route;
     }
+    
+    /**
+     * Get the route from URI
+     * @return array The route 
+     */
     public function getRouteAsArray()
     {
         $route = trim($this->route, '/');
@@ -76,6 +91,11 @@ class Route
         }
         return $cleanRoute;
     }
+    
+    /**
+     * Get the route in JSON format
+     * @return string The JSON string
+     */
     public function getRouteAsJSON()
     {
         return json_encode($this->getRouteAsArray());
@@ -166,11 +186,15 @@ class Route
         return $route;
     }
 
-
+    /**
+     * Merge new default settings with old one
+     * @param array $default The new defaults
+     */
     private function mergeDefault(array $default)
     {
         $this->default = array_merge($this->default, $default);
     }
+    
     /**
      * Test if $key is a route variable.
      * @param string  $key The key to found.
@@ -214,6 +238,7 @@ class Route
             }
         }
     }
+    
     /**
      * Use the route specified
      * @param array $route The route found in routing file given by the user
