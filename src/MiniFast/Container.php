@@ -14,13 +14,15 @@ class Container
 
         return $storage;
     }
-    
-    public function getView($template = __DIR__ . '/templates', $settings = ['cache' => false])
+
+    /**
+     * Shortcut to setAttribute of *Storage*
+     * @param mixed $key   The key of the variable to store
+     * @param mixed $value The value of the variable to store
+     */
+    public function register($key, $value)
     {
-        $twig = $this->getTwig($template, $settings);
-        $view = new View($twig);
-        
-        return $view;
+        $this->getStorage()->setAttribute($key, $value);
     }
 
     /**
@@ -46,7 +48,7 @@ class Container
      * @param  string                 $templates The directory where templates are stored
      * @return Twig_Loader_Filesystem The Twig loader
      */
-    protected function getTwigLoader($templates)
+    public function getTwigLoader($templates)
     {
         $loader = new \Twig_Loader_Filesystem($templates);
 
@@ -59,7 +61,7 @@ class Container
      * @param  array                  $settings Optionnal settings for Twig
      * @return Twig_Environment       Twig
      */
-    protected function getTwigEnvironment($loader, $settings)
+    public function getTwigEnvironment($loader, $settings)
     {
         $twig = new \Twig_Environment($loader, $settings);
 
