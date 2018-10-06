@@ -245,6 +245,14 @@ class Route
      */
     private function useRoute(array $route)
     {
+        // New container
+        $container = new Container();
+        
+        // Insert vars in Storage
+        $container
+            ->getStorage()
+            ->setAttribute('route.storage', $this->vars);
+        
         if (isset($route['controller']) and $route['controller'] !== null) {
             $this->addController($route['controller']);
         }
@@ -274,14 +282,6 @@ class Route
         // Render view
         if (isset($route['view'])) {
             if ($route['view'] != null) {
-                // New container
-                $container = new Container();
-                
-                // Insert vars in Storage
-                $container
-                    ->getStorage()
-                    ->setAttribute('route.storage', $this->vars);
-                
                 // Render the view
                 $view = $container->getView($this->templateDir);
                 $view->render($route['view']);
