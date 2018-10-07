@@ -251,7 +251,7 @@ class Route
         // Insert vars in Storage
         $container
             ->getStorage()
-            ->setAttribute('route.storage', $this->vars);
+            ->setAttributes($this->vars);
         
         if (isset($route['controller']) and $route['controller'] !== null) {
             $this->addController($route['controller']);
