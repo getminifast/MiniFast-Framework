@@ -38,7 +38,7 @@ class View
         } else {
             $this->template = $this->twig->load($template . '.twig');
         }
-        
-        $this->template->render($s->getAttributes());
+
+        echo $this->template->render($s->getAttributes());
     }
 }
