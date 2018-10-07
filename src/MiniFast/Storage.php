@@ -56,7 +56,7 @@ class Storage extends Singleton
      */
     public function setAttributes(array $array)
     {
-        array_merge($this->storage, $array);
+        $this->storage = array_merge($this->storage, $array);
     }
 
     /**
