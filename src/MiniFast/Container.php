@@ -24,6 +24,20 @@ class Container
     {
         $this->getStorage()->setAttribute($key, $value);
     }
+    
+    /**
+     * Get instance of *View*
+     * @param  string $template The template directory
+     * @param  array  $settings Twig settings
+     * @return View   The view instance
+     */
+    public function getView($template = __DIR__ . '/templates', $settings = ['cache' => false])
+    {
+        $twig = $this->getTwig($template, $settings);
+        $view = new View($twig);
+
+        return $view;
+    }
 
     /**
      * Get all Twig system
