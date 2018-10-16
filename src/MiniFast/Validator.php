@@ -48,6 +48,78 @@ class Validator
     }
     
     /**
+     * Check if needle is boolean
+     * @return boolean True if boolean
+     */
+    public function isBool()
+    {
+        return gettype($this->check) === 'boolean';
+    }
+
+    /**
+     * Check if needle is integer
+     * @return boolean True if integer
+     */
+    public function isInt()
+    {
+        return gettype($this->check) === 'integer';
+    }
+
+    /**
+     * Check if needle is float
+     * @return boolean True if float
+     */
+    public function isFloat()
+    {
+        return gettype($this->check) === 'double';
+    }
+
+    /**
+     * Check if needle is string
+     * @return boolean True if string
+     */
+    public function isString()
+    {
+        return gettype($this->check) === 'string';
+    }
+
+    /**
+     * Check if needle is array
+     * @return boolean True if array
+     */
+    public function isArray()
+    {
+        return gettype($this->check) === 'array';
+    }
+
+    /**
+     * Check if needle is object
+     * @return boolean True if object
+     */
+    public function isObject()
+    {
+        return gettype($this->check) === 'object';
+    }
+
+    /**
+     * Check if needle is resource
+     * @return boolean True if resource
+     */
+    public function isResource()
+    {
+        return gettype($this->check) === 'resource';
+    }
+
+    /**
+     * Check if needle is null
+     * @return boolean True if null
+     */
+    public function isNull()
+    {
+        return gettype($this->check) === 'null';
+    }
+    
+    /**
      * Test if string is a hex
      * @return boolean True if hex
      */
