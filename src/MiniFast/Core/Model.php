@@ -1,6 +1,6 @@
 <?php
 
-namespace MiniFast;
+namespace MiniFast\Core;
 
 class Controller
 {
@@ -14,7 +14,7 @@ class Controller
         $c = new $c();
         $c->index();
     }
-    
+
     /**
      * Determine the full-qualified class name
      * @param  string $class_name The class name
@@ -23,10 +23,10 @@ class Controller
     protected function getFullClassName(string $class_name)
     {
         $relative_class = str_replace('.', '\\', $class_name);
-        
+
         $qualified_class = 'MiniFast\Controller\\'
             . $relative_class;
-        
+
         return $qualified_class;
     }
 }

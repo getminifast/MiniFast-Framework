@@ -1,6 +1,6 @@
 <?php
 
-namespace MiniFast;
+namespace MiniFast\Storage;
 
 class Singleton
 {

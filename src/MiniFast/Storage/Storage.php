@@ -1,11 +1,11 @@
 <?php
 
-namespace MiniFast;
+namespace MiniFast\Storage;
 
 class Storage extends Singleton
 {
     protected $storage = [];
-    
+
     /**
      * Shortcut of getAttribute()
      * @param  mixed $key The key of the array
@@ -19,7 +19,7 @@ class Storage extends Singleton
             return $this->getAttribute($key);
         }
     }
-    
+
     /**
      * Shortcut of setAttribute()
      * @param mixed $key   The key of the array

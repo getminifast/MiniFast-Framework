@@ -1,7 +1,7 @@
 <?php
-namespace MiniFast;
+namespace MiniFast\Core\Route;
 
-class Route
+class Controller
 {
     private $route;
     private $routeToUse;
@@ -10,7 +10,7 @@ class Route
     private $controllerDir;
     private $controllers = [];
     private $templateDir;
-    
+
     public function __construct()
     {
         $basepath = implode('/', array_slice(explode('/', $_SERVER['SCRIPT_NAME']), 0, -1)) . '/';
@@ -65,7 +65,7 @@ class Route
             }
         }
     }
-    
+
     /**
      * Get the route
      * @return array The route as an array
@@ -74,7 +74,7 @@ class Route
     {
         return $this->route;
     }
-    
+
     /**
      * Get the route from URI
      * @return array The route
@@ -91,7 +91,7 @@ class Route
         }
         return $cleanRoute;
     }
-    
+
     /**
      * Get the route in JSON format
      * @return string The JSON string
@@ -194,7 +194,7 @@ class Route
     {
         $this->default = array_merge($this->default, $default);
     }
-    
+
     /**
      * Test if $key is a route variable.
      * @param string  $key The key to found.
@@ -237,7 +237,7 @@ class Route
             }
         }
     }
-    
+
     /**
      * Use the route specified
      * @param array $route The route found in routing file given by the user
@@ -246,12 +246,12 @@ class Route
     {
         // New container
         $container = new Container();
-        
+
         // Insert vars in Storage
         $container
             ->getStorage()
             ->setAttributes($this->vars);
-        
+
         if (isset($route['controller']) and $route['controller'] !== null) {
             $this->addController($route['controller']);
         }

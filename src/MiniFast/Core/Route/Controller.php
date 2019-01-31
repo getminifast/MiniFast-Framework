@@ -1,0 +1,72 @@
+<?php
+
+namespace MiniFast\Core\Route;
+
+use \MiniFast\Config;
+
+class Controller
+{
+    protected $url;
+    protected $section;
+    protected $default;
+
+    public function __construct()
+    {
+        $this->route = $this->section = null;
+    }
+
+    private function setUrl(): void
+    {
+        $completeUrl = $_SERVER['HTTP_REQUEST'];
+        $explodedUrl = \explode('?', $completeUrl);
+        $this->url = $explodedUrl[0]; // Cleaned URL
+    }
+
+    public function getUrlAsString(): string
+    {
+        return $this->url;
+    }
+
+    /**
+     * Get the route as an array
+     * @return array The route as an array
+     */
+    public function getUrlAsArray(): array
+    {
+        return \explode('/', $this->url);
+    }
+
+    /**
+     * Select a file and search for the corresponding route
+     * @param mixed  $file      The file to open, can be an array
+     * @param string $templates The template directory
+     */
+    public function fromFiles($files, string $templates): void
+    {
+        if (is_array($files)) {
+            foreach ($files as $file) {
+                $this->fromFiles($file, $templates);
+            }
+        } elseif (\is_string($files)) {
+            $file = new File($files);
+
+            if ($file->exists) {
+                $this->section = new Section($file->getArray());
+            }
+        }
+    }
+
+    private function route()
+    {
+        $size = \sizeof($this->getRouteAsArray());
+        $section = $this->section;
+
+        for ($i = 0; $i < $size; $i++) {
+            if ($i < ($size - 1)) {
+                
+            } else {
+
+            }
+        }
+    }
+}

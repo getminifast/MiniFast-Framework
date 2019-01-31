@@ -1,6 +1,6 @@
 <?php
 
-namespace MiniFast;
+namespace MiniFast\Core;
 
 class Container
 {
@@ -24,7 +24,7 @@ class Container
     {
         $this->getStorage()->setAttribute($key, $value);
     }
-    
+
     /**
      * Get instance of *View*
      * @param  string $template The template directory
