@@ -72,7 +72,7 @@ class Route
     private function setModels(array $content): void
     {
         $this->models = $this
-            ->arraySetter($content, Config::ROUTER_MODELNAME_INDEX);
+            ->arraySetter($content, Config::ROUTER_ROUTES_MODELS);
     }
 
     public function getModels(): array
@@ -83,7 +83,7 @@ class Route
     private function setView(array $content): void
     {
         $this->view = $this
-            ->stringSetter($content, Config::ROUTER_VIEWNAME_INDEX);
+            ->stringSetter($content, Config::ROUTER_ROUTES_VIEW);
     }
 
     public function getView(): ?string

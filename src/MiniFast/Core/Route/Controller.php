@@ -3,6 +3,8 @@
 namespace MiniFast\Core\Route;
 
 use \MiniFast\Config;
+use \MiniFast\Route;
+use \MiniFast\Section;
 
 class Controller
 {
@@ -13,6 +15,12 @@ class Controller
     public function __construct()
     {
         $this->route = $this->section = null;
+        $this->default = new Route(
+            [
+                Config::ROUTER_ROUTENAME_INDEX => 'default',
+                Config::routerroute
+            ]
+        );
     }
 
     private function setUrl(): void
@@ -58,12 +66,16 @@ class Controller
 
     private function route()
     {
-        $size = \sizeof($this->getRouteAsArray());
+        $route = $this->getRouteAsArray();
+        $size = \sizeof($route);
         $section = $this->section;
 
         for ($i = 0; $i < $size; $i++) {
             if ($i < ($size - 1)) {
-                
+                $section = $section->searchInSections();
+                if ($section === null) {
+
+                }
             } else {
 
             }

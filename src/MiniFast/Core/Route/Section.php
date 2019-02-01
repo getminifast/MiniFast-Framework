@@ -44,22 +44,24 @@ class Section
 
     private function findName(array $content): string
     {
-        if (isset($content[Config::ROUTER_SECTIONNAME_INDEX])) {
-            if (!empty($content[Config::ROUTER_SECTIONNAME_INDEX])) {
-                return $content[Config::ROUTER_SECTIONNAME_INDEX];
+        if (isset($content[Config::ROUTER_ROUTES_SECTIONS])) {
+            if (!empty($content[Config::ROUTER_ROUTES_SECTIONS])) {
+                return $content[Config::ROUTER_ROUTES_SECTIONS];
             }
         }
 
         throw new \Exception('A section name cannot be empty.');
     }
 
-    private function findDefault(array $content): Route
+    private function findDefault(array $content): ?Route
     {
         if (isset($content[Config::ROUTER_DEFAULT_INDEX])) {
-            $this->default = new Route(
+            return new Route(
                 $content[Config::ROUTER_DEFAULT_INDEX]
             );
         }
+
+        return null;
     }
 
     private function findSections($content): array
