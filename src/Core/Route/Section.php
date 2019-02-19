@@ -20,6 +20,13 @@ class Section
         $this->default = $this->findDefault($content);
     }
 
+    /**
+     * Find an array at $index in $content
+     * @param  array  $content The section
+     * @param  string $index   The index to find
+     * @param  string $class   The classname of the element
+     * @return array           An array filled with objects
+     */
     private function find(array $content, string $index, string $class): array
     {
         $items = [];
@@ -33,6 +40,11 @@ class Section
         return $items;
     }
 
+    /**
+     * Find all routes in $content
+     * @param  array $content The section content
+     * @return array          An array filled with *Route*
+     */
     private function findRoutes(array $content): array
     {
         return $this->find(
@@ -42,6 +54,11 @@ class Section
         );
     }
 
+    /**
+     * Find this section name
+     * @param  array  $content The section content
+     * @return string          The section name
+     */
     private function findName(array $content): string
     {
         if (isset($content[Config::ROUTER_ROUTES_SECTIONS])) {
@@ -53,6 +70,11 @@ class Section
         throw new \Exception('A section name cannot be empty.');
     }
 
+    /**
+     * Find a default *Route*
+     * @param  array  $content The section content
+     * @return Route           The default *Route* if found
+     */
     private function findDefault(array $content): ?Route
     {
         if (isset($content[Config::ROUTER_DEFAULT_INDEX])) {
@@ -64,6 +86,11 @@ class Section
         return null;
     }
 
+    /**
+     * Find all sections in $content
+     * @param  array $content The section content
+     * @return array          All found sections
+     */
     private function findSections($content): array
     {
         return $this->find(
@@ -73,21 +100,38 @@ class Section
         );
     }
 
+    /**
+     * Return all routes in this section
+     * @return array All routes in this section
+     */
     public function getRoutes(): array
     {
         return $this->routes;
     }
 
+    /**
+     * Return all sections in this section
+     * @return array All sections in this section
+     */
     public function getSections(): array
     {
         return $this->sections;
     }
 
+    /**
+     * Get this section name
+     * @return string This section name
+     */
     private function getName(): string
     {
         return $this->name;
     }
 
+    /**
+     * Search for a section with $name
+     * @param  string $name The name of the section to find
+     * @return Section      The *Section* instance if found
+     */
     public function searchInSections(string $name): ?Section
     {
         foreach ($this->sections as $section) {
@@ -99,6 +143,11 @@ class Section
         return null;
     }
 
+    /**
+     * Search for a route with $name
+     * @param  string $name The name of the route to find
+     * @return Route        The *Route* instance if found
+     */
     public function searchInRoutes(string $name): ?Route
     {
         foreach ($this->routes as $route) {

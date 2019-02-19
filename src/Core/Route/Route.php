@@ -80,28 +80,48 @@ class Route
         }
     }
 
+    /**
+     * Return the name of the route
+     * @return string The name of the route
+     */
     public function getName(): string
     {
         return $this->name;
     }
 
+    /**
+     * Retrieve model names from $content
+     * @param array $content The route as an array
+     */
     private function setModels(array $content): void
     {
         $this->models = $this
             ->arraySetter($content, Config::ROUTER_ROUTES_MODELS);
     }
 
+    /**
+     * Return all models in the route
+     * @return array All models in an array
+     */
     public function getModels(): array
     {
         return $this->models;
     }
 
+    /**
+     * Retrieve the view name from $content
+     * @param array $content The route as a string
+     */
     private function setView(array $content): void
     {
         $this->view = $this
             ->stringSetter($content, Config::ROUTER_ROUTES_VIEW);
     }
 
+    /**
+     * Return the view name in the route
+     * @return string The view name
+     */
     public function getView(): ?string
     {
         return $this->view;
