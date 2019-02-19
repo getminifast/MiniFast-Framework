@@ -31,8 +31,9 @@ class Container
      * @param  array  $settings Twig settings
      * @return View   The view instance
      */
-    public function getView($template = __DIR__ . '/templates', $settings = ['cache' => false])
-    {
+    public function getView(
+      $template = __DIR__ . '/templates', $settings = ['cache' => false]
+    ) {
         $twig = $this->getTwig($template, $settings);
         $view = new View($twig);
 

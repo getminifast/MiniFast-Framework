@@ -57,7 +57,8 @@ class Route
         if (
             $this->name = $this
                 ->stringSetter(
-                    $content, Config::ROUTER_ROUTENAME_INDEX
+                    $content,
+                    Config::ROUTER_ROUTENAME_INDEX
                 ) === null
         ) {
             throw new \Exception('A route cannot have an empty name.');

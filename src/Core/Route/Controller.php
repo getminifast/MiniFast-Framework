@@ -73,11 +73,9 @@ class Controller
         for ($i = 0; $i < $size; $i++) {
             if ($i < ($size - 1)) {
                 $section = $section->searchInSections();
-                if ($section === null) {
-
+                if ($section instanceof Section) {
                 }
             } else {
-
             }
         }
     }
