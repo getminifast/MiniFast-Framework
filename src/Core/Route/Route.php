@@ -16,6 +16,12 @@ class Route
         $this->name = $this->setName($content);
     }
 
+    /**
+     * [arraySetter description]
+     * @param  array  $content [description]
+     * @param  string $index   [description]
+     * @return array           [description]
+     */
     private function arraySetter(array $content, string $index): array
     {
         $items = [];
@@ -35,6 +41,12 @@ class Route
         return $items;
     }
 
+    /**
+     * Parse a route as an array and retrieve data
+     * @param  array  $content The route as an array
+     * @param  string $index   The index to find
+     * @return string          The string in $index index
+     */
     private function stringSetter(array $content, string $index): ?string
     {
         $item = null;
@@ -52,14 +64,17 @@ class Route
         return $item;
     }
 
+    /**
+     * Set the name of the route
+     * @param array $content The content of the route
+     */
     private function setName(array $content): void
     {
         if (
-            $this->name = $this
-                ->stringSetter(
-                    $content,
-                    Config::ROUTER_ROUTENAME_INDEX
-                ) === null
+            $this->name = $this->stringSetter(
+                $content,
+                Config::ROUTER_ROUTENAME_INDEX
+            ) === null
         ) {
             throw new \Exception('A route cannot have an empty name.');
         }

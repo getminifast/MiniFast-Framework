@@ -23,6 +23,9 @@ class Controller
         );
     }
 
+    /**
+     * Set the current URL
+     */
     private function setUrl(): void
     {
         $completeUrl = $_SERVER['HTTP_REQUEST'];
@@ -30,6 +33,10 @@ class Controller
         $this->url = $explodedUrl[0]; // Cleaned URL
     }
 
+    /**
+     * Get the URL and return it as a string
+     * @return string The URL
+     */
     public function getUrlAsString(): string
     {
         return $this->url;
@@ -64,7 +71,10 @@ class Controller
         }
     }
 
-    private function route()
+    /**
+     * Parse all route objects to find the good router
+     */
+    private function route(): void
     {
         $route = $this->getRouteAsArray();
         $size = \sizeof($route);
