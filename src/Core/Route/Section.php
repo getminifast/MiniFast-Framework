@@ -3,12 +3,14 @@
 namespace MiniFast\Core\Route;
 
 use \MiniFast\Config;
-use \MiniFast\Core\Route;
+use \MiniFast\Core\Route\Route;
+use \MiniFast\Core\Route\RouteIterator;
+use \MiniFast\Core\Route\SectionIterator;
 
 class Section
 {
-    protected $routes;
-    protected $sections;
+    protected $routeIterator;
+    protected $sectionIterator;
     protected $name;
     protected $default;
 
@@ -27,13 +29,14 @@ class Section
      * @param  string $class   The classname of the element
      * @return array           An array filled with objects
      */
-    private function find(array $content, string $index, string $class): array
-    {
-        $items = [];
+    private function find(
+        array $content, string $index, string $class, string $iterator
+    ): array {
+        $items = new $iterator();
 
         if (isset($content[$index])) {
             foreach ($content[$index] as $key => $item) {
-                $items[] = new $class($item);
+                $items->add(new $class($item));
             }
         }
 
@@ -50,7 +53,8 @@ class Section
         return $this->find(
             $content,
             Config::ROUTER_ROUTES_INDEX,
-            Config::ROUTER_ROUTE_CLASSNAME
+            Config::ROUTER_ROUTE_CLASSNAME,
+            Config::ROUTER_ROUTEITERATOR_CLASSNAME
         );
     }
 
@@ -96,7 +100,8 @@ class Section
         return $this->find(
             $content,
             Config::ROUTER_SECTIONS_INDEX,
-            Config::ROUTER_SECTION_CLASSNAME
+            Config::ROUTER_SECTION_CLASSNAME,
+            Config::ROUTER_SECTIONITERATOR_CLASSNAME
         );
     }
 
