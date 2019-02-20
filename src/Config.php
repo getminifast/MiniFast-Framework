@@ -7,6 +7,7 @@ class Config
     const ROUTER_DEFAULT_INDEX = 'default';
 
     const ROUTER_ROUTE_CLASSNAME = 'Route';
+    const ROUTER_ROUTEITERATOR_CLASSNAME = 'RouteIterator';
     const ROUTER_ROUTES_INDEX = 'routes';
     const ROUTER_ROUTES_MODELS = 'model';
     const ROUTER_ROUTES_NAME_INDEX = 'name';
@@ -14,6 +15,7 @@ class Config
     const ROUTER_ROUTES_VIEW = 'view';
 
     const ROUTER_SECTION_CLASSNAME = 'Section';
+    const ROUTER_SECTIONITERATOR_CLASSNAME = 'SectionIterator';
     const ROUTER_SECTIONS_INDEX = 'sections';
     const ROUTER_SECTIONS_NAME = 'name';
 }
