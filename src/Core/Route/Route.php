@@ -17,10 +17,11 @@ class Route
     }
 
     /**
-     * [arraySetter description]
-     * @param  array  $content [description]
-     * @param  string $index   [description]
-     * @return array           [description]
+     * Parse the route as an array and retrieve data
+     * @param  array  $content The route as an array
+     * @param  string $index   The index to find
+     * @param  string $class   The classname of the element
+     * @return array           An array filled with objects
      */
     private function arraySetter(array $content, string $index): array
     {
