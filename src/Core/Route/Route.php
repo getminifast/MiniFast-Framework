@@ -23,7 +23,7 @@ class Route
      * @param  string $class   The classname of the element
      * @return array           An array filled with objects
      */
-    private function arraySetter(array $content, string $index): array
+    private function arraySetter(array $content, string $index, string $class): array
     {
         $items = [];
 
