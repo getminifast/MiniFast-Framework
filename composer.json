@@ -17,8 +17,8 @@
     },
     "autoload": {
         "psr-4": {
-            "MiniFast\\": "src/MiniFast/",
-            "MiniFast\\Controller\\": "../../../controllers/"
+            "MiniFast\\": "src/",
+            "MiniFast\\Model\\": "../../../models/"
         }
     }
 }
