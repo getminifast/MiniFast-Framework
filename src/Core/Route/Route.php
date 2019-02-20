@@ -29,9 +29,9 @@ class Route
 
         if (isset($content[$index])) {
             if (is_array($content[$index])) {
-                foreach ($content[$index] as $model) {
+                foreach ($content[$index] as $item) {
                     if (is_string($model)) {
-                        $items[] = $model;
+                        $items[] = new $item;
                     }
                 }
             } elseif (is_string($content[$index])) {
@@ -57,7 +57,7 @@ class Route
                 if (is_string($content[$index])) {
                     $item = $content[$index];
                 } else {
-                    throw new \Exception("A ${$index} name must be a string.");
+                    throw new \Exception("$index name must be a string.");
                 }
             }
         }
