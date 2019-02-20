@@ -6,13 +6,13 @@ class Controller
 {
     /**
      * Execute a controller
-     * @param string $controller The controller name
+     * @param string $model The controller name
      */
-    public function useController(string $controller)
+    public function useModel(string $model)
     {
-        $c = $this->getFullClassName($controller);
-        $c = new $c();
-        $c->index();
+        $class = $this->getFullClassName($model);
+        $class = new $class();
+        $class->index();
     }
 
     /**
@@ -24,8 +24,7 @@ class Controller
     {
         $relative_class = str_replace('.', '\\', $class_name);
 
-        $qualified_class = 'MiniFast\Controller\\'
-            . $relative_class;
+        $qualified_class = 'MiniFast\Model\\'. $relative_class;
 
         return $qualified_class;
     }
