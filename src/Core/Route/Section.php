@@ -3,9 +3,6 @@
 namespace MiniFast\Core\Route;
 
 use \MiniFast\Config;
-use \MiniFast\Core\Route\Route;
-use \MiniFast\Core\Route\RouteIterator;
-use \MiniFast\Core\Route\SectionIterator;
 
 class Section
 {
