@@ -34,7 +34,7 @@ class File
             return \file_get_contents($path);
         }
 
-        throw new \Exception("File ${$path} does not exists.");
+        throw new \Exception("File $path does not exists.");
     }
 
     /**
