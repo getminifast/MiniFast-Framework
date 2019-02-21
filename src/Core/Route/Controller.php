@@ -62,7 +62,7 @@ class Controller
         } elseif (\is_string($files)) {
             $file = new File($files);
 
-            if ($file->exists) {
+            if ($file->exists()) {
                 $this->section = new Section($file->getArray());
             }
         }
