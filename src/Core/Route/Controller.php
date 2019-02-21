@@ -16,10 +16,7 @@ class Controller
     {
         $this->route = $this->section = null;
         $this->default = new Route(
-            [
-                Config::ROUTER_ROUTENAME_INDEX => 'default',
-                Config::routerroute
-            ]
+            []
         );
     }
 
