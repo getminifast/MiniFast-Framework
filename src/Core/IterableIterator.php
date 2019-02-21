@@ -1,8 +1,8 @@
 <?php
 
-namespace MiniFast\Core\Route;
+namespace MiniFast\Core;
 
-class SectionIterator implements SeekableIterator, ArrayAccess, Countable
+class IterableIterator implements \SeekableIterator, \ArrayAccess, \Countable
 {
     private $elems = [];
     private $key = 0;
@@ -54,7 +54,7 @@ class SectionIterator implements SeekableIterator, ArrayAccess, Countable
      * Move the cursor at a defined position
      * @param int $position The position to move at
      */
-    public function seek(int $position)
+    public function seek($position)
     {
         $oldPosition = $this->key;
         $this->key = $position;
