@@ -3,8 +3,8 @@
 namespace MiniFast\Core\Route;
 
 use \MiniFast\Config;
-use \MiniFast\Route;
-use \MiniFast\Section;
+use \MiniFast\Core\Route\Route;
+use \MiniFast\Core\Route\Section;
 
 class Controller
 {
