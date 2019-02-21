@@ -2,9 +2,9 @@
 
 namespace MiniFast\Core\Route;
 
-use \MiniFast\Core\Iterable;
+use \MiniFast\Core\IterableIterator as IT;
 
-class SectionIterator extends Iterable
+class SectionIterator extends IT
 {
     /**
      * Add a section

@@ -2,9 +2,9 @@
 
 namespace MiniFast\Core\Route;
 
-use \MiniFast\Core\Iterable;
+use \MiniFast\Core\IterableIterator as IT;
 
-class RouteIterator extends Iterable
+class RouteIterator extends IT
 {
     /**
      * Add a route
