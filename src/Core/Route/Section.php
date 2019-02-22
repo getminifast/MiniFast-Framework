@@ -28,7 +28,7 @@ class Section
      */
     private function find(
         array $content, string $index, string $class, string $iterator
-    ): array {
+    ): object {
         $items = new $iterator();
 
         if (isset($content[$index])) {
@@ -45,7 +45,7 @@ class Section
      * @param  array $content The section content
      * @return array          An array filled with *Route*
      */
-    private function findRoutes(array $content): array
+    private function findRoutes(array $content): object
     {
         return $this->find(
             $content,
