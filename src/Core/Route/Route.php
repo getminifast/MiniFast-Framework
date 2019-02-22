@@ -11,7 +11,7 @@ class Route
     protected $response;
     protected $name;
 
-    public function __constrcut(array $content)
+    public function __construct(array $content)
     {
         $this->name = $this->setName($content);
     }
