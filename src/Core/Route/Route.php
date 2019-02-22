@@ -73,14 +73,12 @@ class Route
      */
     private function setName(array $content): void
     {
-        if (
-            $this->name = $this->stringSetter(
-                $content,
-                Config::ROUTER_ROUTENAME_INDEX
-            ) === null
-        ) {
-            throw new \Exception('A route cannot have an empty name.');
+
+        if (isset($content[Config::ROUTER_ROUTES_NAME_INDEX])) {
+            return $this->name = $content[Config::ROUTER_ROUTES_NAME_INDEX];
         }
+
+        throw new \Exception('A route cannot have an empty name.');
     }
 
     /**
