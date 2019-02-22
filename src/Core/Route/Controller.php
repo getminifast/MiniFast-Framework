@@ -83,10 +83,11 @@ class Controller
 
         for ($i = 0; $i < $size; $i++) {
             if ($i < ($size - 1)) {
-                $section = $section->searchInSections();
+                $section = $section->searchInSections($url[$i]);
                 if ($section instanceof Section) {
                 }
             } else {
+                $route = $section->searchInRoutes($url[$i]);
             }
         }
     }
