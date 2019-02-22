@@ -62,9 +62,9 @@ class Section
      */
     private function findName(array $content): string
     {
-        if (isset($content[Config::ROUTER_ROUTES_SECTIONS])) {
-            if (!empty($content[Config::ROUTER_ROUTES_SECTIONS])) {
-                return $content[Config::ROUTER_ROUTES_SECTIONS];
+        if (isset($content[Config::ROUTER_SECTIONS_NAME])) {
+            if (!empty($content[Config::ROUTER_SECTIONS_NAME])) {
+                return $content[Config::ROUTER_SECTIONS_NAME];
             }
         }
 
