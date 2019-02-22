@@ -25,7 +25,7 @@ class Route
      * @param  string $class   The classname of the element
      * @return array           An array filled with objects
      */
-    private function arraySetter(array $content, string $index, string $class): array
+    private function arraySetter(array $content, string $index): array
     {
         $items = [];
 
@@ -33,7 +33,7 @@ class Route
             if (is_array($content[$index])) {
                 foreach ($content[$index] as $item) {
                     if (is_string($model)) {
-                        $items[] = new $item;
+                        $items[] = $item;
                     }
                 }
             } elseif (is_string($content[$index])) {
