@@ -71,7 +71,7 @@ class Route
      * Set the name of the route
      * @param array $content The content of the route
      */
-    private function setName(array $content): void
+    private function setName(array $content): string
     {
 
         if (isset($content[Config::ROUTER_ROUTES_NAME_INDEX])) {
