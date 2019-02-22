@@ -11,7 +11,7 @@ class IterableIterator implements \SeekableIterator, \ArrayAccess, \Countable
      * Add an elem
      * @param mixed $elem The element to add
      */
-    public function add($elem)
+    public function addItem($elem)
     {
         $this->elems[] = $elem;
     }
