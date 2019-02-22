@@ -77,8 +77,8 @@ class Controller
      */
     private function route(): void
     {
-        $route = $this->getRouteAsArray();
-        $size = \sizeof($route);
+        $url = $this->getUrlAsArray();
+        $size = \sizeof($url);
         $section = $this->section;
 
         for ($i = 0; $i < $size; $i++) {
