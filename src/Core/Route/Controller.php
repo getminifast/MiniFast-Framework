@@ -68,6 +68,8 @@ class Controller
                 $this->section = new Section($file->getArray());
             }
         }
+
+        $this->route();
     }
 
     /**
