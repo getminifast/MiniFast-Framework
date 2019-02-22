@@ -12,6 +12,6 @@ class SectionIterator extends IT
      */
     public function add(Section $section)
     {
-        $this->elems[] = $section;
+        $this->addItem($section);
     }
 }

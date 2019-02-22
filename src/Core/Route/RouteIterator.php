@@ -12,6 +12,6 @@ class RouteIterator extends IT
      */
     public function add(Route $route)
     {
-        $this->elems[] = $route;
+        $this->addItem($route);
     }
 }
