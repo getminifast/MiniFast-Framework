@@ -13,7 +13,9 @@ class Route
 
     public function __construct(array $content)
     {
-        $this->name = $this->setName($content);
+        $this->setName($content);
+        $this->setModels($content);
+        $this->setView($content);
     }
 
     /**
