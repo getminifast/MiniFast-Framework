@@ -92,7 +92,7 @@ class Section
      * @param  array $content The section content
      * @return array          All found sections
      */
-    private function findSections($content): array
+    private function findSections($content): object
     {
         return $this->find(
             $content,
