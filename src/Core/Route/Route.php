@@ -127,4 +127,14 @@ class Route
     {
         return $this->view;
     }
+
+    public function use()
+    {
+        $model = new Model();
+
+        // Call all models
+        foreach ($this->models as $key => $name) {
+            $model->use($name);
+        }
+    }
 }
