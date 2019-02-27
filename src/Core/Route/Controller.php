@@ -14,6 +14,7 @@ class Controller
 
     public function __construct()
     {
+        $this->setUrl();
         $this->route = $this->section = null;
         $this->default = new Route(
             [
