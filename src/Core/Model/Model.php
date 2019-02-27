@@ -8,7 +8,7 @@ class Controller
      * Execute a controller
      * @param string $model The controller name
      */
-    public function useModel(string $model)
+    public function use(string $model)
     {
         $class = $this->getFullClassName($model);
         $class = new $class();
