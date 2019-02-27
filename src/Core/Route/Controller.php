@@ -28,7 +28,7 @@ class Controller
      */
     private function setUrl(): void
     {
-        $completeUrl = $_SERVER['HTTP_REQUEST'];
+        $completeUrl = $_SERVER['REQUEST_URI'];
         $explodedUrl = \explode('?', $completeUrl);
         $this->url = $explodedUrl[0]; // Cleaned URL
     }
