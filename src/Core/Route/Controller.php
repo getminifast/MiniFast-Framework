@@ -30,7 +30,7 @@ class Controller
     {
         $completeUrl = $_SERVER['REQUEST_URI'];
         $explodedUrl = \explode('?', $completeUrl);
-        $this->url = $explodedUrl[0]; // Cleaned URL
+        $this->url = trim($explodedUrl[0], '/'); // Cleaned URL
     }
 
     /**
